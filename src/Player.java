@@ -25,12 +25,12 @@ public class Player implements Serializable {
     /* Instance Methods */
     public void takeDamage(double enemyAttack) {
         double damage = enemyAttack - (getDefenseRating() / 5.0);
-        this.health - +damage;
+        this.health -= damage;
         if (this.health <= 0) {
             System.out.println("You have succumbed to the enemy, better luck next time.");
             System.exit(1);
         } else {
-            System.out.println("Current health: "_ this.health);
+            System.out.println("Current health: " + this.health);
         }
     }
 
