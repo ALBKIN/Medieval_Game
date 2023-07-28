@@ -53,12 +53,16 @@ public class MedievalGame {
         return new Player("Test");
     } // End of start
 
-    private void save() throws FileNotFoundException, IOException {
-        // TODO: Add save functionality here
+    private void save() {
         String fileName = player.getName() + ".svr";
-        FileOutputStream userSaveFile = new FileOutputStream(fileName);
-        ObjectOutputStream playerSaver = new ObjectOutputStream(userSaveFile);
-
+        try {
+            FileOutputStream userSaveFile = new FileOutputStream(fileName);
+            ObjectOutputStream playerSaver = new ObjectOutputStream(userSaveFile);
+            playerSaver.writeObject(this.player);
+        } catch (IOException e) {
+            System.out.println("There was an error saving your game, your file might not be available" +
+                    "the next time you go to load a game." + e);
+        }
     } // End of save
 
     private Player load(String playerName, Scanner console) {
