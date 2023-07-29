@@ -69,6 +69,8 @@ public class MedievalGame {
             ObjectInputStream playerLoader = new ObjectInputStream(userLoadFile);
             loadedPlayer = (Player) playerLoader.readObject();
         } catch (IOException | ClassNotFoundException e) {
+            /* TODO: Consider different handling of failed load character. Possibly scan for similar names and ask user
+            *   to confirm or give chance to retry first */
             addDelay(1500);
             System.out.println("There was a problem loading your character. We've created new player with the name you entered");
             System.out.println("If you're sure the spelling is correct, your character may no longer exist");
