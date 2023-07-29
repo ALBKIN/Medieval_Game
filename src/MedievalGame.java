@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.Scanner;
 import java.util.Objects;
 
@@ -66,9 +63,21 @@ public class MedievalGame {
     } // End of save
 
     private Player load(String playerName, Scanner console) {
-        // TODO: Add load functionality here
-
-        return new Player("Test");
+        Player loadedPlayer;
+        try {
+            FileInputStream userLoadFile = new FileInputStream(playerName + ".svr");
+            ObjectInputStream playerLoader = new ObjectInputStream(userLoadFile);
+            loadedPlayer = (Player) playerLoader.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            addDelay(1500);
+            System.out.println("There was a problem loading your character. We've created new player with the name you entered");
+            System.out.println("If you're sure the spelling is correct, your character may no longer exist");
+            System.out.println("Please reload the game if you'd like to try again and correct possible spelling errors.");
+            System.out.println("In the meantime - we created a new character with the name: " + playerName);
+            addDelay(2000);
+            loadedPlayer = new Player(playerName);
+        }
+        return loadedPlayer;
     } // End of load
 
     /*
