@@ -45,9 +45,33 @@ public class MedievalGame {
 
     /* Instance Methods */
     private Player start(Scanner console) {
-        // TODO: Add start functionality here
+        Player player = null;
+        Art.homeScreen();
+        System.out.println("Welcome in the Medieval Game, o brave Adventurer!");
+        System.out.println("If you'd like to start a New Game type \"y\", otherwise " +
+                "\n if you'd like to Load Game, type \"n\"");
+        String answer = console.next().toLowerCase();
+        while (!answer.equals("y") && !answer.equals("n")) {
+            System.out.println("Incorrect choice. Please enter one of two choicesy. \"Y\" for New Game, \"N\" to Load Game.");
+            answer = console.next().toLowerCase();
+        }
 
-        return new Player("Test");
+        if (answer.equals("y")) {
+            System.out.println("Starting New Game...\nEnter your NEW player name: ");
+            String newPlayerName = console.next();
+            if (playerNameExists(newPlayerName)) {
+                System.out.println("Sorry, the player name \"" + newPlayerName + "\" is already taken. Please" +
+                        "choose a different name.");
+                return start(console);
+            } else {
+                player = new Player(newPlayerName);
+            }
+
+        } else if (answer.equals("n")) {
+            System.out.println("Loading Game...\nEnter your EXISTING player name: ");
+            player = load(console.next(), console);
+        }
+        return player;
     } // End of start
 
     private void save() {
@@ -70,7 +94,7 @@ public class MedievalGame {
             loadedPlayer = (Player) playerLoader.readObject();
         } catch (IOException | ClassNotFoundException e) {
             /* TODO: Consider different handling of failed load character. Possibly scan for similar names and ask user
-            *   to confirm or give chance to retry first */
+             *   to confirm or give chance to retry first */
             addDelay(1500);
             System.out.println("There was a problem loading your character. We've created new player with the name you entered");
             System.out.println("If you're sure the spelling is correct, your character may no longer exist");
@@ -93,4 +117,18 @@ public class MedievalGame {
             e.printStackTrace();
         }
     }
+    /*
+    Implementation of a method to check if the playerName already exists in the game records.
+    Later we can use different data structures or file storage to maintain player records
+    For now, I assume the player name already exists if there's a .svr file with the same name*/
+    private boolean playerNameExists(String playerName) {
+        File playerFile = new File(playerName + ".svr");
+        return playerFile.exists();
+    }
+
+    // TODO: Future functionality expansions:
+    // TODO: 1. Enemies + combat system
+    // TODO: 2. Shops / Taverns + interactions, buying, selling items
+    // TODO: 3. 2D map drawn for players to help them navigate around
+    // TODO: X. Encrypt the serialization so users can't change data in the saved files
 }
