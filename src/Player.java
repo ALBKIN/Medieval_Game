@@ -58,6 +58,10 @@ public class Player implements Serializable {
         this.currentWeapon = currentWeapon;
     }
 
+    public double getAttackPoints() {
+        return currentWeapon.getDamage();
+    }
+
     public double getHealth() {
         return health;
     }
