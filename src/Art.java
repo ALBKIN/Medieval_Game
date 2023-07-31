@@ -4,7 +4,7 @@ public class Art {
         System.out.print("   __                                                        __\n");
         System.out.print("  |  |                                                      |  |\n");
         System.out.print(" /----\\                 The Medieval Game                  /----\\\n");
-        System.out.print("[______]          A Test of Serialization Skills          [______]\n");
+        System.out.print("[______]                                                   [______]\n");
         System.out.print(" |    |         _____                        _____         |    |\n");
         System.out.print(" |[]  |        [     ]                      [     ]        |  []|\n");
         System.out.print(" |    |       [_______][ ][ ][ ][][ ][ ][ ][_______]       |    |\n");
