@@ -1,3 +1,5 @@
+import com.sun.tools.jconsole.JConsoleContext;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.Objects;
@@ -106,6 +108,46 @@ public class MedievalGame {
         return loadedPlayer;
     } // End of load
 
+    // Basic combat system implementation
+    private void combat(Enemy enemy, Scanner console) {
+        System.out.println("A wild " + enemy.getName() + " has appeared!");
+
+        while (player.getHealth() > 0 && enemy.getHealth() > 0) {
+            System.out.println("\nPlayer HP: " + player.getHealth());
+            System.out.println((enemy.getName() + " HP: " + enemy.getHealth()));
+            System.out.println("\nWhat will you do?");
+            System.out.println("1. Attack");
+            System.out.println("2. Run");
+            int choice = console.nextInt();
+
+            if (choice == 1) {
+                double playerDamage = player.getAttackPoints();
+                double enemyDamage = enemy.getAttackPoints();
+
+                System.out.println("You attack the " + enemy.getName() + " for " + playerDamage + " damage!");
+                enemy.takeDamage(playerDamage);
+
+                if (enemy.getHealth() <= 0) {
+                    // TODO: Enemy defeated, do something or reward the player
+                    break;
+                }
+
+                System.out.println("The " + enemy.getName() + " attacks you for " + enemyDamage + " damage!");
+                player.takeDamage(enemyDamage);
+
+                if (player.getHealth() <= 0) {
+                    System.out.println("You have been defeated by the " + enemy.getName() + ". Game Over.");
+                    System.exit(0);
+                }
+            } else if (choice == 2) {
+                System.out.println("You run away from the " + enemy.getName() + ".");
+                break;
+            } else {
+                System.out.println("Invalid choice. Please choose again.");
+            }
+        }
+    }
+
     /*
     Adds a delay to the console so it seems like the computer is "thinking"
     or "responding" like a human, not instantly like a computer.
@@ -128,7 +170,8 @@ public class MedievalGame {
 
     // TODO: Future functionality expansions:
     // TODO: 1. Enemies + combat system
+    // TODO: 1A. Implement methods for generating random enemies and handling encounters during the game
     // TODO: 2. Shops / Taverns + interactions, buying, selling items
-    // TODO: 3. 2D map drawn for players to help them navigate around
+    // TODO: 3. Movement, locations + 2D map drawn for players to help them navigate around
     // TODO: X. Encrypt the serialization so users can't change data in the saved files
 }
